@@ -4,13 +4,40 @@ import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import Animated, { Value, cond, set, eq, add } from 'react-native-reanimated';
 import { onGestureEvent } from 'react-native-redash';
 
+export type GestureProps = {
+    /**
+     * The tint color of the view itself.
+     *
+     * @default green
+     */
+    color?: string;
+
+    /**
+     * Height of the view.
+     *
+     * @default 100
+     */
+    height?: number;
+
+    /**
+     * Width of the view.
+     *
+     * @default 100
+     */
+    width?: number;
+
+  };
 
 const withOffset = (value: Animated.Value<number>, state: Animated.Value<State>) => {
 	const offset = new Value(0);
 	return cond(eq(state, State.END), [set(offset, add(offset, value)), offset], add(offset, value));
 };
 
-function Gesture(){
+function Gesture({
+    color = 'green',
+    height = 100,
+    width = 100
+}: GestureProps){
 	const state = new Value(State.UNDETERMINED);
 	const translationX = new Value(0);
 	const translationY = new Value(0);
@@ -26,7 +53,7 @@ function Gesture(){
 		<View>
 			<PanGestureHandler {...gestureHandler}>
 				<Animated.View style={{ transform: [{ translateX }, { translateY }] }}>
-					<View style={[styles.view]}></View>
+					<View style={[styles.view, {backgroundColor: color, height: height, width: width}]}></View>
 				</Animated.View>
 			</PanGestureHandler>
 		</View>
@@ -35,10 +62,7 @@ function Gesture(){
 
 const styles = StyleSheet.create({
 	view: {
-        borderRadius: 50,
-        width: 50,
-        height: 50,
-        backgroundColor: "red"
+		borderRadius: 50
 	},
 });
 

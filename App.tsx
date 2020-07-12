@@ -8,7 +8,7 @@ import { Gesture } from './src/index'
 export default function App() {
 	return (
 		<View style={styles.container}>
-			<Gesture></Gesture>
+			<Gesture color="blue" width={300}></Gesture>
 		</View>
 	);
 }
