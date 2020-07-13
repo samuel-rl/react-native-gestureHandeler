@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { View } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import Animated, { Value, cond, set, eq, add } from 'react-native-reanimated';
 import { onGestureEvent } from 'react-native-redash';
@@ -26,6 +26,13 @@ export type GestureProps = {
      */
     width?: number;
 
+    /**
+     * Width of the view.
+     *
+     * @default 50
+     */
+    borderRadius?: number;
+
   };
 
 const withOffset = (value: Animated.Value<number>, state: Animated.Value<State>) => {
@@ -36,7 +43,8 @@ const withOffset = (value: Animated.Value<number>, state: Animated.Value<State>)
 function Gesture({
     color = 'green',
     height = 100,
-    width = 100
+    width = 100,
+    borderRadius = 50,
 }: GestureProps){
 	const state = new Value(State.UNDETERMINED);
 	const translationX = new Value(0);
@@ -48,22 +56,16 @@ function Gesture({
 	});
 	const translateX = withOffset(translationX, state);
     const translateY = withOffset(translationY, state);
-    
+
 	return (
 		<View>
 			<PanGestureHandler {...gestureHandler}>
 				<Animated.View style={{ transform: [{ translateX }, { translateY }] }}>
-					<View style={[styles.view, {backgroundColor: color, height: height, width: width}]}></View>
+					<View style={{backgroundColor: color, height: height, width: width, borderRadius: borderRadius}}></View>
 				</Animated.View>
 			</PanGestureHandler>
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
-	view: {
-		borderRadius: 50
-	},
-});
 
 export default Gesture;
