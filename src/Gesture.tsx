@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { View } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import Animated, { Value, cond, set, eq, add } from 'react-native-reanimated';
-import { onGestureEvent } from 'react-native-redash';
+import { onGestureEvent, diffClamp } from 'react-native-redash';
 
 export type GestureProps = {
     /**
@@ -53,9 +53,11 @@ function Gesture({
 		state,
 		translationX,
 		translationY,
-	});
-	const translateX = withOffset(translationX, state);
-    const translateY = withOffset(translationY, state);
+    });
+    const windowWidth = Dimensions.get('window').width;
+    const windowHeight = Dimensions.get('window').height;
+	const translateX = diffClamp(withOffset(translationX, state), -windowWidth/2 + width/2, windowWidth/2 - width/2);
+    const translateY = diffClamp(withOffset(translationY, state), -windowHeight/2 + height/2, windowHeight/2 - height/2);
 
 	return (
 		<View>
