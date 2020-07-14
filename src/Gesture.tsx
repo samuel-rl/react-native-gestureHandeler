@@ -33,6 +33,20 @@ export type GestureProps = {
      */
     borderRadius?: number;
 
+    /**
+     * X offset of the view.
+     *
+     * @default 0
+     */
+    offsetX?: number;
+
+    /**
+     * Y offset of the view.
+     *
+     * @default 0
+     */
+    offsetY?: number;
+
   };
 
 const withOffset = (value: Animated.Value<number>, state: Animated.Value<State>, offset: Animated.Value<number>) => {
@@ -44,6 +58,8 @@ function Gesture({
     height = 100,
     width = 100,
     borderRadius = 50,
+    offsetX= 0,
+    offsetY = 0
 }: GestureProps){
     const state = new Value(State.UNDETERMINED);
     const windowWidth = Dimensions.get('window').width;
@@ -51,15 +67,15 @@ function Gesture({
     const STATUSBAR_HEIGHT = StatusBar.currentHeight!;
 	const translationX = new Value(0);
     const translationY = new Value(0);
-    const offsetX = new Value(20);
-    const offsetY = new Value(0);
-	const gestureHandler = onGestureEvent({
+    const offset_X = new Value(offsetX);
+    const offset_Y = new Value(offsetY);
+ 	const gestureHandler = onGestureEvent({
 		state,
 		translationX,
 		translationY,
     });
-	const translateX = diffClamp(withOffset(translationX, state, offsetX), 0, windowWidth - width);
-    const translateY = diffClamp(withOffset(translationY, state, offsetY), STATUSBAR_HEIGHT, windowHeight - height + STATUSBAR_HEIGHT);
+	const translateX = diffClamp(withOffset(translationX, state, offset_X), 0, windowWidth - width);
+    const translateY = diffClamp(withOffset(translationY, state, offset_Y), STATUSBAR_HEIGHT, windowHeight - height + STATUSBAR_HEIGHT);
 
 	return (
 		<View>

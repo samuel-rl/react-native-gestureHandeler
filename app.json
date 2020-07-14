@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native-gestureHandeler-component",
-    "slug": "react-native-gestureHandeler-component",
+    "name": "gestureHandeler",
+    "slug": "gestureHandeler",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,6 +21,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "android": {
+        "package": "com.samuelrl.gestureHandeler",
+        "versionCode": 1
+      }
   }
 }
